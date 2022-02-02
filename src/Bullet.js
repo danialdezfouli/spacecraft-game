@@ -1,3 +1,5 @@
+import {lerp} from "./utils"
+
 export class Bullet {
   constructor({player, x, y, dx, onDestroy}) {
     this.player = player
