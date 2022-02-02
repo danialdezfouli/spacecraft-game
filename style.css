@@ -1,0 +1,465 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Bubblegum Sans', cursive;
+  user-select: none;
+  color: #fff;
+}
+
+#root {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.player {
+  position: fixed;
+  width: 80px;
+  height: 75px;
+  /* opacity: .05; */
+  /* transform: translateX(-50%); */
+  /* z-index: 9; */
+}
+
+.player .body {
+  position: absolute;
+  left: 50%;
+  top: 9px;
+  width: 44px;
+  height: 58px;
+  background: #fff;
+  transform: translate(-50%, 0);
+  border-radius: 100% 100% 8px 8px;
+  z-index: 2;
+}
+
+.player .overlay::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 48px;
+  width: 44px;
+  height: 23px;
+  transform: translate(-50%, 0);
+  border-radius: 0 0 8px 8px;
+  background: #fff;
+  z-index: 9;
+}
+
+.player .overlay::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 70px;
+  width: 28px;
+  height: 6px;
+  transform: translate(-50%, 0);
+  border-radius: 0 0 2px 2px;
+  background: #888;
+  z-index: 7;
+}
+
+.player .fins {
+  position: absolute;
+  z-index: 1;
+  width: 40px;
+  top: 40px;
+  height: 24px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.player .fins::after,
+.player .fins::before {
+  content: '';
+  position: absolute;
+  top: 0%;
+  right: 100%;
+  width: 25px;
+  height: 20px;
+  transform: skewY(10deg);
+  transform-origin: top right;
+  background: #d6d7dd;
+}
+
+.player .fins::after {
+  right: auto;
+  left: 100%;
+  transform-origin: top left;
+  transform: skewY(-10deg);
+}
+
+.player .fins2 {
+  position: absolute;
+  width: 24px;
+  top: 56px;
+  height: 24px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: -8;
+}
+.player .fins2::after,
+.player .fins2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 100%;
+  width: 29px;
+  height: 12px;
+  transform: skewY(22deg);
+  transform-origin: top right;
+  background: #b8b9be;
+  z-index: -8;
+}
+
+.player .fins2::after {
+  right: auto;
+  left: 100%;
+  transform-origin: top left;
+  transform: skewY(-22deg);
+}
+
+.player .head {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 20px;
+  height: 50px;
+  height: 60px;
+  transform: translate(-50%, 0);
+  border-radius: 50% 50% 0 0;
+  background: #e2e2e2;
+  box-shadow: 0 4px 0 6px #1e1a20;
+  z-index: 3;
+}
+
+.player .glass {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 10px;
+  background: #87f5f2;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid #c3c3c3;
+  z-index: 9;
+}
+
+.player .guns {
+  position: absolute;
+  top: 34px;
+  width: 64px;
+  left: 50%;
+  transform: translate(-50%, -1px);
+  z-index: -1;
+}
+
+.player .guns::after,
+.player .guns::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 10px;
+  box-shadow: 0 0 10px 1px rgba(20, 149, 255, 0.3);
+  background: rgb(255, 255, 255);
+  border-radius: 10px 10px 0 0;
+  transform: rotate(8deg);
+}
+
+.player .guns::after {
+  left: auto;
+  right: 0;
+  transform: rotate(-8deg);
+}
+
+.player .fire {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 22px;
+  height: 30px;
+  transform: translate(-50%, 0);
+}
+
+.player .fire::before {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 8px;
+  height: 40px;
+  transform: translate3d(-50%, -30px, 0px) scaleX(0.6);
+  border-radius: 100%;
+  background: rgba(14, 255, 255, 0.692);
+  animation: blueFire 2s infinite;
+  box-shadow: 0 24px 14px 3px rgb(17, 73, 255);
+  z-index: -1;
+}
+
+.player .fuel {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  height: 4px;
+  width: 30px;
+  border-radius: 1px;
+  border: 2px solid #ddd;
+  background: #ddd;
+  transform: translate(-50%, 0);
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.player .fuel span {
+  flex-grow: 1;
+  background: #fff;
+  height: 100%;
+}
+
+.player .fuel span.active {
+  background: #ff2929;
+  border-radius: 1px;
+}
+
+@keyframes blueFire {
+  0%,
+  100% {
+    transform: translate3d(-50%, -30px, 0px) scaleX(0.6);
+  }
+  50% {
+    transform: translate3d(-50%, -27px, 0px) scaleX(0.6);
+  }
+}
+
+.player .fire::after {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 8px;
+  height: 20px;
+  transform: translate3d(-50%, -9px, 0px);
+  border-radius: 100%;
+  background: rgb(255, 200, 72);
+  box-shadow: 0 6px 10px 3px rgb(255, 184, 32), 0 6px 20px 3px rgb(255, 77, 23);
+  z-index: -1;
+}
+
+.player .fire span {
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: rgb(255, 77, 23);
+  box-shadow: 0 6px 8px 3px rgb(255, 184, 32), 0 6px 20px 4px rgb(255, 77, 23);
+  border-radius: 100%;
+  opacity: 0;
+  transform: scale(0);
+  animation: fire 2s infinite;
+}
+
+@keyframes fire {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, -10px, 0px) scale(0.1);
+  }
+  10% {
+    opacity: 1;
+    transform: translate3d(-50%, -10px, 0px) scale(1);
+  }
+
+  100% {
+    transform: translate3d(-50%, -3px, 0px);
+    opacity: 0;
+  }
+}
+
+.bullet {
+  position: absolute;
+  transform: translate(-50%, 0);
+  width: 5px;
+  height: 5px;
+  background: #fff;
+  box-shadow: 0 0 16px 1px hsl(207, 100%, 54%);
+  border-radius: 100px;
+}
+
+.thunder {
+  position: fixed;
+  transform: scale(1, 1) translate(-50%, 0);
+  top: 0;
+  width: 5px;
+  background: #fff;
+  box-shadow: 0 -2px 16px 1px hsl(120, 100%, 54%);
+  border-radius: 0 0 15% 15%;
+  transition: 0.3s transform;
+  transform-origin: bottom;
+}
+
+.thunder.leaving {
+  animation: thunder 0.3s infinite;
+}
+
+.thunder.leaved {
+  opacity: 1;
+  transform: scale(1, 0) translate(-50%, 0);
+}
+
+@keyframes thunder {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 1;
+  }
+}
+
+.indicators-bottom-right {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.indicators-bottom-right .icon {
+  font-size: 30px;
+  font-weight: bold;
+  height: 34px;
+  display: block;
+}
+
+.indicators-bottom-right .subtitle {
+  font-size: 14px;
+  color: #d5d5d5;
+  display: block;
+}
+
+.indicators-bottom-right small {
+  font-size: 1.25rem;
+}
+
+.bullets-counter {
+}
+
+.bullets-counter .icon {
+  height: 28px;
+}
+.bullets-counter .subtitle {
+  font-size: 18px;
+}
+
+.thunder-indicator {
+  transition: 0.2s;
+}
+
+.thunder-indicator:not(.active) {
+  filter: grayscale(100%);
+  transform: scale(0.7);
+}
+
+.thunder-indicator .icon::before {
+  content: '⚡';
+  font-size: 26px;
+  transform: translate(-4px, -4px);
+  display: block;
+}
+
+.indicators-bottom-left {
+  position: fixed;
+  left: 2rem;
+  bottom: 2.75rem;
+}
+
+.indicators-bottom-left .texts {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.indicators-bottom-left .life {
+  position: relative;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.indicators-bottom-left .life .progress {
+  position: relative;
+  background: rgba(118, 121, 131, 0.2);
+  border-radius: 6px;
+  margin-right: 1rem;
+  height: 10px;
+  width: 70px;
+}
+
+.indicators-bottom-left .life .value {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: rgba(189, 7, 7, 0.4);
+  border-radius: 6px;
+}
+
+.indicators-bottom-left .text {
+  font-size: 14px;
+  width: 50px;
+}
+
+.enemy {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  transform: scale(1);
+  transition: 0.2s transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.enemy.damaged {
+  transform: scale(0.9);
+  opacity: 0.7;
+}
+
+.enemy.destroy {
+  animation: enemy-destroy 0.5s forwards;
+}
+
+@keyframes enemy-destroy {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
