@@ -33,8 +33,10 @@ export default class SpaceCraft {
 
     root.appendChild(this.DOM.el)
 
-    this.width = this.DOM.el.offsetWidth
-    this.height = 80
+    this.bounds = {
+      width: 80,
+      height: 80,
+    }
   }
 
   init({player}) {
@@ -80,7 +82,7 @@ export default class SpaceCraft {
 
     this.DOM.el.style.cssText = styleObjectToCssText({
       top: this.y.prev + 'px',
-      left: this.x.prev - this.width / 2 + 'px',
+      left: this.x.prev - this.bounds.width / 2 + 'px',
     })
 
     requestAnimationFrame(this.draw.bind(this))

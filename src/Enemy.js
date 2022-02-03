@@ -30,14 +30,14 @@ export default class Enemy {
 
     // collision detection
     const fighter = this.game.player.fighter
-    const fighterX = fighter.x.prev - fighter.width / 2
+    const fighterX = fighter.x.prev - fighter.bounds.width / 2
     const fighterY = fighter.y.prev
 
     if (
-      fighterX + fighter.width > this.x &&
+      fighterX + fighter.bounds.width > this.x &&
       fighterX < this.x + this.width &&
       this.y + this.height > fighterY &&
-      this.y < fighterY + fighter.height
+      this.y < fighterY + fighter.bounds.height
     ) {
       this.game.player.decreaseLife(true)
       this.destroy()
