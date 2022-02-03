@@ -10,7 +10,7 @@ export default class Enemy {
     this.DOM.el = addDomNode(root, {className: 'enemy'})
 
     this.life = 100
-    this.dy = Math.random() * 0.8 + 0.3 + speed
+    this.dy = Math.random() * 1.5 + 0.1 + speed
     this.height = 30
     this.width = 30
     this.x = rand(0.25, 0.75) * innerWidth
