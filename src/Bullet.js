@@ -1,4 +1,4 @@
-import {lerp} from "./utils"
+import {lerp} from './utils'
 
 export class Bullet {
   constructor({player, x, y, dx, onDestroy}) {
@@ -62,6 +62,7 @@ export class Bullet {
         this.destroy()
         let dead = enemy.hit()
         this.player.addScore(dead)
+        break
       }
     }
   }
@@ -127,6 +128,7 @@ export class Thunder {
       if (Math.abs(enemy.x + enemy.width / 2 - this.fighter.x.prev) < 10) {
         enemy.destroy()
         this.player.addScore(true)
+        break
       }
     }
   }
