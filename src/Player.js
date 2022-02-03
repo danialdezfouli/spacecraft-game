@@ -25,7 +25,6 @@ export default class Player {
 
     this.score = 0
     this.level = 1
-
     this.life = 100
   }
 
@@ -138,8 +137,13 @@ export default class Player {
       return false
     }
 
-    const BULLET_TIME_GAP = this.fighter.thunder ? 300 : 100
-    return Date.now() - this.lastShootedBullet > BULLET_TIME_GAP
+    let bullet_time_gap
+    if (this.fighter.thunder) {
+      bullet_time_gap = 200
+    } else {
+      bullet_time_gap = 200 - Math.max(this.level, 20) * 10
+    }
+    return Date.now() - this.lastShootedBullet > bullet_time_gap
   }
 
   canShootThunder() {

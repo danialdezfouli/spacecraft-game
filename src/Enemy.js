@@ -3,14 +3,14 @@ import {addDomNode, rand} from './utils'
 const emojies = ['👽', '👾', '🚀', '💣', '🔥', '💀', '🤖']
 
 export default class Enemy {
-  constructor({game}) {
+  constructor({game, speed}) {
     this.game = game
     this.active = true
     this.DOM = {}
     this.DOM.el = addDomNode(root, {className: 'enemy'})
 
     this.life = 100
-    this.dy = Math.random() * 0.8 + 0.3
+    this.dy = Math.random() * 0.8 + 0.3 + speed
     this.height = 30
     this.width = 30
     this.x = rand(0.25, 0.75) * innerWidth

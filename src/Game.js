@@ -72,10 +72,12 @@ export default class Game {
   createEnemies() {
     if (this.state !== GAME_STATE.RUN) return
 
-    const len = Math.random() * (2 + this.player.level / 2)
+    const len = Math.random() * Math.min(2 + this.player.level / 3, 10)
+
     for (let i = 0; i < len; i++) {
       const enemy = new Enemy({
         game: this,
+        speed: this.player.level * 0.03,
       })
       this.enemies.push(enemy)
     }
