@@ -89,7 +89,7 @@ export default class Game {
     for (let i = 0; i < len; i++) {
       const enemy = new Enemy({
         game: this,
-        speed: this.player.level * 0.05,
+        speed: Math.random() * 1.4 + 0.3 + this.player.level * 0.07,
       })
       this.enemies.push(enemy)
     }

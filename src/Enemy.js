@@ -10,7 +10,7 @@ export default class Enemy {
     this.active = true
 
     this.life = 100
-    this.dy = Math.random() * 1.2 + 0.5 + speed
+    this.dy = speed
     this.height = 30
     this.width = 30
     this.x = rand(0.25, 0.75) * innerWidth
