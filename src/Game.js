@@ -89,7 +89,9 @@ export default class Game {
       this.createEnemies()
     }
 
-    this.enemiesTimer = setInterval(this.createEnemies.bind(this), 3000)
+    this.enemiesTimer = setInterval(() => {
+      this.createEnemies()
+    }, 4500)
   }
 
   removeEnemy(enemy) {
