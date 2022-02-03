@@ -62,6 +62,9 @@ export default class Player {
     this.score += dead ? 20 : 5
 
     if (this.score >= this.level * 100) {
+      this.life += 15
+      if (this.life > 100) this.life = 100
+
       this.level++
       this.bulletCapacity = Math.floor(8 + this.level / 2)
       this.bulletsLeft = this.bulletCapacity
