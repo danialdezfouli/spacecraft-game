@@ -141,7 +141,7 @@ export default class Player {
     if (this.fighter.thunder) {
       bullet_time_gap = 200
     } else {
-      bullet_time_gap = 200 - Math.max(this.level, 20) * 10
+      bullet_time_gap = 200 - Math.min(this.level, 20) * 8
     }
     return Date.now() - this.lastShootedBullet > bullet_time_gap
   }
