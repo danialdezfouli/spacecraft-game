@@ -10,7 +10,6 @@ export const GAME_STATE = {
 
 export default class Game {
   constructor({player}) {
-    this.state = GAME_STATE.RUN
     this.stars = []
 
     this.DOM = {}
@@ -29,8 +28,8 @@ export default class Game {
     this.createBottomRightIndicators()
     this.createBottomLeftIndicators()
     this.initPlayer(player)
-    this.initEnemies(true)
-    this.animate()
+
+    this.run()
 
     window.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
@@ -51,16 +50,26 @@ export default class Game {
     })
   }
 
-  pause() {
-    this.state = GAME_STATE.PAUSE
-    clearInterval(this.enemiesTimer)
-    cancelAnimationFrame(this.animation)
+  get playing() {
+    return this.state === GAME_STATE.RUN
+  }
+  
+  get paused() {
+    return this.state === GAME_STATE.PAUSE
   }
 
   run() {
     this.state = GAME_STATE.RUN
-    this.initEnemies(false)
+    this.player.run()
+    this.initEnemies()
     this.animate()
+  }
+
+  pause() {
+    this.state = GAME_STATE.PAUSE
+    this.player.pause()
+    clearInterval(this.enemiesTimer)
+    cancelAnimationFrame(this.animation)
   }
 
   initPlayer(player) {
@@ -83,8 +92,8 @@ export default class Game {
     }
   }
 
-  initEnemies(first) {
-    if (first) {
+  initEnemies() {
+    if (!this.enemies) {
       this.enemies = []
       this.createEnemies()
     }
@@ -190,11 +199,13 @@ export default class Game {
   }
 
   animate() {
-    this.ctx.fillStyle = '#1e1a20'
     // this.ctx.clearRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
-    this.ctx.fillRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
 
-    this.draw()
+    if (this.state === GAME_STATE.RUN) {
+      this.ctx.fillStyle = '#1e1a20'
+      this.ctx.fillRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
+      this.draw()
+    }
 
     this.animation = requestAnimationFrame(this.animate.bind(this))
   }
@@ -207,6 +218,7 @@ export default class Game {
     setTimeout(() => {
       alert('Game Over!')
       this.player.reset()
+      this.player.updateDom()
       this.state = GAME_STATE.RUN
       this.animate()
     }, 50)

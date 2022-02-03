@@ -1,17 +1,13 @@
 import mouse from './Mouse'
 import {lerp} from './utils'
 import config from './config'
+import {GAME_STATE} from './Game'
 
 export default class Player {
   constructor({fighter}) {
     this.fighter = fighter
     this.reset()
     this.initEvents()
-    this.fighter.init({player: this})
-
-    setInterval(() => {
-      this.updateDom()
-    }, 1000)
   }
 
   reset() {
@@ -30,6 +26,7 @@ export default class Player {
 
   init() {
     this.updateDom()
+    this.fighter.init({player: this})
   }
 
   initEvents() {
@@ -55,6 +52,14 @@ export default class Player {
         this.reload()
       }
     })
+  }
+
+  run() {
+    this.fighter.draw()
+  }
+  
+  pause() {
+    this.fighter.stop()
   }
 
   addScore(dead) {
@@ -133,6 +138,8 @@ export default class Player {
   }
 
   canShootBullet() {
+    if (this.game.state !== GAME_STATE.RUN) return false
+
     if (this.bulletsLeft <= 0 || this.reloading) {
       return false
     }
@@ -147,6 +154,7 @@ export default class Player {
   }
 
   canShootThunder() {
+    if (this.game.state !== GAME_STATE.RUN) return false
     if (this.fighter.thunder) return false
 
     if (Date.now() - this.lastShootedThunder < config.thunder_time_gap) {

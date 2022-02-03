@@ -1,17 +1,19 @@
 import {Bullet, Thunder} from './Bullet'
+import {GAME_STATE} from './Game'
 import mouse from './Mouse'
 import {
+  addDomNode,
+  createDomNode,
   lerp,
   rand,
-  createDomNode,
   styleObjectToCssText,
-  addDomNode,
 } from './utils'
 
 export default class SpaceCraft {
   constructor() {
     this.bullets = []
     this.thunder = null
+    this.frameRequest = undefined
 
     this.DOM = {}
     this.DOM.el = this.createElement()
@@ -61,6 +63,11 @@ export default class SpaceCraft {
     return el
   }
 
+  stop() {
+    cancelAnimationFrame(this.frameRequest)
+    this.frameRequest = undefined
+  }
+
   draw() {
     this.bullets.forEach(b => b.update())
     this.bullets.forEach(b => b.draw())
@@ -85,7 +92,9 @@ export default class SpaceCraft {
       left: this.x.prev - this.bounds.width / 2 + 'px',
     })
 
-    requestAnimationFrame(this.draw.bind(this))
+    if (this.player.game.playing) {
+      this.frameRequest = requestAnimationFrame(this.draw.bind(this))
+    }
   }
 
   createFires() {
