@@ -29,7 +29,27 @@ export default class Game {
     this.createBottomRightIndicators()
     this.createBottomLeftIndicators()
     this.initPlayer(player)
-    this.initEnemies()
+    this.initEnemies(true)
+    this.animate()
+
+    window.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        this.pause()
+      } else {
+        this.run()
+      }
+    })
+  }
+
+  pause() {
+    this.state = GAME_STATE.PAUSE
+    clearInterval(this.enemiesTimer)
+    cancelAnimationFrame(this.animation)
+  }
+
+  run() {
+    this.state = GAME_STATE.RUN
+    this.initEnemies(false)
     this.animate()
   }
 
@@ -39,21 +59,25 @@ export default class Game {
     this.player.init()
   }
 
-  initEnemies() {
-    this.enemies = []
-    const createenemies = () => {
-      if (this.state !== GAME_STATE.RUN) return
+  createEnemies() {
+    if (this.state !== GAME_STATE.RUN) return
 
-      const len = Math.random() * (2 + this.player.level)
-      for (let i = 0; i < len; i++) {
-        const enemy = new Enemy({
-          game: this,
-        })
-        this.enemies.push(enemy)
-      }
+    const len = Math.random() * (2 + this.player.level / 2)
+    for (let i = 0; i < len; i++) {
+      const enemy = new Enemy({
+        game: this,
+      })
+      this.enemies.push(enemy)
     }
-    setInterval(createenemies, 3000)
-    createenemies()
+  }
+
+  initEnemies(first) {
+    if (first) {
+      this.enemies = []
+      this.createEnemies()
+    }
+
+    this.enemiesTimer = setInterval(this.createEnemies.bind(this), 3000)
   }
 
   removeEnemy(enemy) {
