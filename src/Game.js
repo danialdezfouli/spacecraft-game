@@ -83,8 +83,7 @@ export default class Game {
   createEnemies() {
     if (this.state !== GAME_STATE.RUN) return
 
-    console.log(this.player.level)
-    const len = Math.random() * Math.min(2 + this.player.level / 3, 5)
+    const len = Math.random() * Math.min(1 + this.player.level / 6, 5)
 
     for (let i = 0; i < len; i++) {
       const enemy = new Enemy({
@@ -102,9 +101,8 @@ export default class Game {
     }
 
     this.enemiesTimer = setInterval(() => {
-      console.log('create enemies', new Date().getSeconds())
       this.createEnemies()
-    }, 3000)
+    }, 1500)
   }
 
   removeEnemy(enemy) {
@@ -217,6 +215,7 @@ export default class Game {
     this.pause()
     this.state = GAME_STATE.OVER
     this.enemies.forEach(enemy => enemy.destroy())
+    this.player.fighter.bullets = []
     cancelAnimationFrame(this.animation)
 
     setTimeout(() => {

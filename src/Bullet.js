@@ -44,7 +44,9 @@ export class Bullet {
       this.height = this.height + this.dh
     }
 
-    this.findEnemies()
+    if (this.y > 0) {
+      this.findEnemies()
+    }
   }
 
   findEnemies() {
