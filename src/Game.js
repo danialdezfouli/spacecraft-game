@@ -215,7 +215,7 @@ export default class Game {
     this.pause()
     this.state = GAME_STATE.OVER
     this.enemies.forEach(enemy => enemy.destroy())
-    this.player.fighter.bullets = []
+    this.player.fighter.bullets.forEach(bullet => bullet.destroy())
     cancelAnimationFrame(this.animation)
 
     setTimeout(() => {
