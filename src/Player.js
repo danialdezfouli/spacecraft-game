@@ -10,6 +10,14 @@ export default class Player {
     this.initEvents()
   }
 
+  init() {
+    this.fighter.init({
+      player: this,
+      game: this.game,
+    })
+    this.updateDom()
+  }
+
   reset() {
     this.lastShootedBullet = 0
     this.lastShootedThunder = Date.now() - 7000
@@ -22,11 +30,6 @@ export default class Player {
     this.score = 0
     this.level = 1
     this.life = 100
-  }
-
-  init() {
-    this.updateDom()
-    this.fighter.init({player: this})
   }
 
   initEvents() {
@@ -55,9 +58,9 @@ export default class Player {
   }
 
   run() {
-    this.fighter.draw()
+    this.fighter.animate()
   }
-  
+
   pause() {
     this.fighter.stop()
   }

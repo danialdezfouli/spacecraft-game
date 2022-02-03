@@ -9,27 +9,23 @@ import {
   styleObjectToCssText,
 } from './utils'
 
-export default class SpaceCraft {
+export default class Fighter {
   constructor() {
+    this.DOM = {}
+    this.createElement()
+    this.createFireDom()
+
     this.bullets = []
     this.thunder = null
-    this.frameRequest = undefined
-
-    this.DOM = {}
-    this.DOM.el = this.createElement()
-
-    this.createFires()
-
-    this.maxRight = innerWidth - this.DOM.el.offsetWidth * 3
-    this.maxLeft = this.DOM.el.offsetWidth * 3
+    this.frameRequest = null
 
     this.x = {
-      curr: innerWidth / 2,
+      curr: 0,
       prev: innerWidth / 2,
     }
 
     this.y = {
-      curr: innerHeight - 200,
+      curr: 0,
       prev: innerHeight - 200,
     }
 
@@ -41,9 +37,10 @@ export default class SpaceCraft {
     }
   }
 
-  init({player}) {
+  init({player, game}) {
     this.player = player
-    this.draw()
+    this.game = game
+    this.animate()
   }
 
   createElement() {
@@ -60,15 +57,14 @@ export default class SpaceCraft {
 
     el.appendChild(template)
 
-    return el
+    this.DOM.el = el
   }
 
   stop() {
     cancelAnimationFrame(this.frameRequest)
-    this.frameRequest = undefined
   }
 
-  draw() {
+  animate() {
     this.bullets.forEach(b => b.update())
     this.bullets.forEach(b => b.draw())
 
@@ -78,26 +74,25 @@ export default class SpaceCraft {
 
     if (mouse.x !== undefined) {
       this.x.curr = innerWidth * (mouse.percentage.x + 0.05) * 0.9
+      this.x.prev = lerp(this.x.prev, this.x.curr, 0.1)
     }
 
     if (mouse.y !== undefined) {
       this.y.curr = innerHeight * (mouse.percentage.y + 0.1) * 0.8
+      this.y.prev = lerp(this.y.prev, this.y.curr, 0.1)
     }
-
-    this.x.prev = lerp(this.x.prev, this.x.curr, 0.1)
-    this.y.prev = lerp(this.y.prev, this.y.curr, 0.1)
 
     this.DOM.el.style.cssText = styleObjectToCssText({
       top: this.y.prev + 'px',
       left: this.x.prev - this.bounds.width / 2 + 'px',
     })
 
-    if (this.player.game.playing) {
-      this.frameRequest = requestAnimationFrame(this.draw.bind(this))
+    if (this.game.playing) {
+      this.frameRequest = requestAnimationFrame(this.animate.bind(this))
     }
   }
 
-  createFires() {
+  createFireDom() {
     const el = this.DOM.el.querySelector('.fire')
     const count = 4
 

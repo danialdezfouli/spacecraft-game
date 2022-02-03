@@ -4,17 +4,17 @@ const emojies = ['👽', '👾', '🚀', '💣', '🔥', '💀', '🤖']
 
 export default class Enemy {
   constructor({game, speed}) {
-    this.game = game
-    this.active = true
     this.DOM = {}
     this.DOM.el = addDomNode(root, {className: 'enemy'})
+    this.game = game
+    this.active = true
 
     this.life = 100
-    this.dy = Math.random() * 1.5 + 0.1 + speed
+    this.dy = Math.random() * 1.2 + 0.5 + speed
     this.height = 30
     this.width = 30
     this.x = rand(0.25, 0.75) * innerWidth
-    this.y = -100
+    this.y = -50
     this.DOM.el.style.left = `${this.x}px`
 
     this.DOM.el.innerHTML = emojies[Math.floor(rand(0, emojies.length - 1))]

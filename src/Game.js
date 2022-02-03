@@ -14,7 +14,9 @@ export default class Game {
 
     this.DOM = {}
     this.DOM.canvas = document.querySelector('canvas')
-    this.ctx = this.DOM.canvas.getContext('2d')
+    this.ctx = this.DOM.canvas.getContext('2d', {
+      alpha: false,
+    })
 
     const resize = () => {
       this.DOM.canvas.width = window.innerWidth
@@ -53,7 +55,7 @@ export default class Game {
   get playing() {
     return this.state === GAME_STATE.RUN
   }
-  
+
   get paused() {
     return this.state === GAME_STATE.PAUSE
   }
@@ -81,6 +83,7 @@ export default class Game {
   createEnemies() {
     if (this.state !== GAME_STATE.RUN) return
 
+    console.log(this.player.level)
     const len = Math.random() * Math.min(2 + this.player.level / 3, 5)
 
     for (let i = 0; i < len; i++) {
@@ -99,6 +102,7 @@ export default class Game {
     }
 
     this.enemiesTimer = setInterval(() => {
+      console.log('create enemies', new Date().getSeconds())
       this.createEnemies()
     }, 3000)
   }
@@ -199,9 +203,8 @@ export default class Game {
   }
 
   animate() {
-    // this.ctx.clearRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
-
     if (this.state === GAME_STATE.RUN) {
+      // this.ctx.clearRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
       this.ctx.fillStyle = '#1e1a20'
       this.ctx.fillRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
       this.draw()
@@ -211,16 +214,18 @@ export default class Game {
   }
 
   gameOver() {
+    this.pause()
     this.state = GAME_STATE.OVER
     this.enemies.forEach(enemy => enemy.destroy())
     cancelAnimationFrame(this.animation)
 
     setTimeout(() => {
       alert('Game Over!')
+      this.enemies = []
+      this.state = GAME_STATE.RUN
+      this.run()
       this.player.reset()
       this.player.updateDom()
-      this.state = GAME_STATE.RUN
-      this.animate()
     }, 50)
   }
 }
