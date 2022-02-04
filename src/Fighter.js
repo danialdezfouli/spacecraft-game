@@ -130,7 +130,7 @@ export default class Fighter {
 
     const args = {
       player: this.player,
-      ctx: this.game.ctx,
+      ctx: this.game.ui.ctx,
       y: bulletY,
       onDestroy: bullet => {
         this.bullets = this.bullets.filter(b => b !== bullet)

@@ -118,22 +118,23 @@ export default class Player {
   }
 
   updateDom() {
+    const ui = this.game.ui.DOM
+
     if (this.reloading) {
-      this.game.DOM.bulletsLeft.innerHTML = '<small>Reloading</small>'
+      ui.bulletsLeft.innerHTML = '<small>Reloading</small>'
     } else {
-      this.game.DOM.bulletsLeft.innerText = this.bulletsLeft
+      ui.bulletsLeft.innerText = this.bulletsLeft
     }
 
-    this.game.DOM.bulletsCapacity.innerText = '∞'
+    ui.bulletsCapacity.innerText = '∞'
 
-    // this.game.DOM.thunderCounter.innerText = '0'
-    this.game.DOM.thunder.classList.toggle('active', this.canShootThunder())
+    ui.thunder.classList.toggle('active', this.canShootThunder())
 
-    this.game.DOM.score.innerText = this.score
-    this.game.DOM.level.innerText = this.level
+    ui.score.innerText = this.score
+    ui.level.innerText = this.level
 
-    this.game.DOM.life.style.width = `${this.life}%`
-    this.game.DOM.lifeText.innerText = `${Math.floor(this.life)}%`
+    ui.life.style.width = `${this.life}%`
+    ui.lifeText.innerText = `${Math.floor(this.life)}%`
   }
 
   canShootBullet() {

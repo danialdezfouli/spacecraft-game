@@ -11,24 +11,10 @@ export const GAME_STATE = {
 export default class Game {
   constructor({player}) {
     this.stars = []
-
-    this.DOM = {}
-    this.DOM.canvas = document.querySelector('canvas')
-    this.ctx = this.DOM.canvas.getContext('2d', {
-      alpha: false,
-    })
-
-    const resize = () => {
-      this.DOM.canvas.width = window.innerWidth
-      this.DOM.canvas.height = window.innerHeight
-    }
-
-    addEventListener('resize', resize)
-    resize()
+    this.ui = new GameUI(this)
 
     this.createStars()
-    this.createBottomRightIndicators()
-    this.createBottomLeftIndicators()
+
     this.initPlayer(player)
 
     this.run()
@@ -117,10 +103,72 @@ export default class Game {
     for (let i = 0; i < 10; i++) {
       this.stars.push(
         new Star({
-          ctx: this.ctx,
+          ctx: this.ui.ctx,
         }),
       )
     }
+  }
+
+  draw() {
+    this.stars.forEach(star => star.draw())
+    this.enemies.forEach(enemy => enemy.draw())
+    this.player.draw()
+  }
+
+  animate() {
+    if (this.state !== GAME_STATE.RUN) {
+      return
+    }
+
+    this.ui.ctx.fillStyle = '#1e1a20'
+    this.ui.ctx.fillRect(
+      0,
+      0,
+      this.ui.DOM.canvas.width,
+      this.ui.DOM.canvas.height,
+    )
+
+    this.draw()
+
+    this.animation = requestAnimationFrame(this.animate.bind(this))
+  }
+
+  gameOver() {
+    this.pause()
+    this.state = GAME_STATE.OVER
+    this.enemies.forEach(enemy => enemy.destroy())
+    this.player.fighter.bullets.forEach(bullet => bullet.destroy())
+    cancelAnimationFrame(this.animation)
+
+    setTimeout(() => {
+      alert('Game Over!')
+      this.enemies = []
+      this.state = GAME_STATE.RUN
+      this.run()
+      this.player.reset()
+      this.player.updateDom()
+    }, 50)
+  }
+}
+
+class GameUI {
+  constructor(game) {
+    this.DOM = {}
+    this.DOM.canvas = document.querySelector('canvas')
+    this.ctx = this.DOM.canvas.getContext('2d', {
+      alpha: false,
+    })
+
+    const resize = () => {
+      this.DOM.canvas.width = window.innerWidth
+      this.DOM.canvas.height = window.innerHeight
+    }
+
+    addEventListener('resize', resize)
+    resize()
+
+    this.createBottomRightIndicators()
+    this.createBottomLeftIndicators()
   }
 
   createBottomRightIndicators() {
@@ -193,41 +241,5 @@ export default class Game {
     })
 
     root.appendChild(el)
-  }
-
-  draw() {
-    this.stars.forEach(star => star.draw())
-    this.enemies.forEach(enemy => enemy.draw())
-    this.player.draw()
-  }
-
-  animate() {
-    if (this.state !== GAME_STATE.RUN) {
-      return
-    }
-
-    // this.ctx.clearRect(0, 0, innerWidth, innerHeight)
-    this.ctx.fillStyle = '#1e1a20'
-    this.ctx.fillRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
-    this.draw()
-
-    this.animation = requestAnimationFrame(this.animate.bind(this))
-  }
-
-  gameOver() {
-    this.pause()
-    this.state = GAME_STATE.OVER
-    this.enemies.forEach(enemy => enemy.destroy())
-    this.player.fighter.bullets.forEach(bullet => bullet.destroy())
-    cancelAnimationFrame(this.animation)
-
-    setTimeout(() => {
-      alert('Game Over!')
-      this.enemies = []
-      this.state = GAME_STATE.RUN
-      this.run()
-      this.player.reset()
-      this.player.updateDom()
-    }, 50)
   }
 }
