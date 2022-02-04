@@ -30,6 +30,12 @@ export default class Game {
       }
     })
 
+    window.addEventListener('click', e => {
+      if (this.state === GAME_STATE.PAUSE) {
+        this.run()
+      }
+    })
+
     window.addEventListener('keydown', e => {
       if (e.key.toLowerCase() === 'escape') {
         if (this.state === GAME_STATE.RUN) {
