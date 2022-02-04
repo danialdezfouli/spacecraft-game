@@ -28,5 +28,6 @@ pull requests.
 
 - shortcuts modal
 - pause menu
+- save best score
 - choose fighter
 - add fuel
