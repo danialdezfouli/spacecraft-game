@@ -72,12 +72,12 @@ export default class Fighter {
 
     if (mouse.x !== undefined) {
       this.x.curr = innerWidth * (mouse.percentage.x + 0.05) * 0.9
-      this.x.prev = lerp(this.x.prev, this.x.curr, 0.1)
+      this.x.prev = lerp(this.x.prev, this.x.curr, 0.15)
     }
 
     if (mouse.y !== undefined) {
       this.y.curr = innerHeight * (mouse.percentage.y + 0.1) * 0.8
-      this.y.prev = lerp(this.y.prev, this.y.curr, 0.1)
+      this.y.prev = lerp(this.y.prev, this.y.curr, 0.15)
     }
 
     this.DOM.el.style.cssText = styleObjectToCssText({
@@ -130,6 +130,7 @@ export default class Fighter {
 
     const args = {
       player: this.player,
+      ctx: this.game.ctx,
       y: bulletY,
       onDestroy: bullet => {
         this.bullets = this.bullets.filter(b => b !== bullet)

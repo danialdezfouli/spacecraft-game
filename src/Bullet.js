@@ -1,30 +1,23 @@
 import {lerp} from './utils'
 
 export class Bullet {
-  constructor({player, x, y, dx, onDestroy}) {
+  constructor({player, ctx, x, y, dx, onDestroy}) {
+    this.onDestroy = onDestroy
     this.player = player
+    this.ctx = ctx
     this.x = x
     this.y = y
+
     this.dx = dx / 4
     this.xx = 60
     this.dy = 7
     this.active = true
 
+    this.width = 4
     this.height = 5
     this.dh = 0.2
 
-    this.DOM = {
-      el: document.createElement('div'),
-    }
-
-    this.DOM.el.classList.add('bullet')
-    this.DOM.el.style.cssText = `left: ${x}px; top: ${y}px;`
-
-    root.appendChild(this.DOM.el)
-
-    this.onDestroy = () => {
-      onDestroy()
-    }
+    this.draw()
   }
 
   update() {
@@ -49,6 +42,21 @@ export class Bullet {
     }
   }
 
+  draw() {
+    const ctx = this.ctx
+    ctx.beginPath()
+
+    ctx.shadowColor = '#1495ff'
+    ctx.strokeStyle = '#1495ff'
+    ctx.fillStyle = '#fff'
+
+    ctx.shadowBlur = 20
+    ctx.strokeRect(this.x, this.y, this.width, this.height)
+    ctx.fillRect(this.x, this.y, this.width, this.height, [])
+
+    ctx.closePath()
+  }
+
   findEnemies() {
     const enemies = this.player.game.enemies
     const len = enemies.length
@@ -69,12 +77,8 @@ export class Bullet {
     }
   }
 
-  draw() {
-    this.DOM.el.style.cssText = `height: ${this.height}px; left: ${this.x}px; top: ${this.y}px;`
-  }
-
   destroy() {
-    this.DOM.el.remove()
+    this.active = false
     this.onDestroy(this)
   }
 }

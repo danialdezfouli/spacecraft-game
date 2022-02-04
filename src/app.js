@@ -13,4 +13,6 @@ const player = new Player({
 
 const game = new Game({player})
 
-window.game = game
+if (import.meta.env.DEV) {
+  window.game = game
+}
