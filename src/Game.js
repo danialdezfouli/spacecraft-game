@@ -21,9 +21,12 @@ export default class Game {
 
     window.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
+        this.wasPlaying = this.playing
         this.pause()
-      } else {
-        this.run()
+      } else if (this.wasPlaying) {
+        setTimeout(() => {
+          this.run()
+        }, 300)
       }
     })
 
