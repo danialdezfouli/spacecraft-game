@@ -4,6 +4,12 @@ Online Demo: <https://spacecraft.vercel.app/>
 
 a spacecraft that has to survive a journey through space
 
+## ⌨ Shortcuts
+
+- **r** (Reload)
+- **space** (fire)
+- **enter** (thunder)
+
 ## 🐛 Bugs
 
 Please file an issue for bugs, missing documentation, or unexpected behavior.
