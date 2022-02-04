@@ -84,6 +84,8 @@ export default class Game {
     const len = Math.random() * Math.min(1 + this.player.level / 6, 5)
 
     for (let i = 0; i < len; i++) {
+      if (this.enemies.length > 10) break
+
       const enemy = new Enemy({
         game: this,
         speed: Math.random() * 1.4 + 0.3 + this.player.level * 0.07,
