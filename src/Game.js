@@ -62,14 +62,12 @@ export default class Game {
 
   run() {
     this.state = GAME_STATE.RUN
-    this.player.run()
     this.initEnemies()
     this.animate()
   }
 
   pause() {
     this.state = GAME_STATE.PAUSE
-    this.player.pause()
     clearInterval(this.enemiesTimer)
     cancelAnimationFrame(this.animation)
   }
@@ -198,15 +196,18 @@ export default class Game {
   draw() {
     this.stars.forEach(star => star.draw())
     this.enemies.forEach(enemy => enemy.draw())
+    this.player.draw()
   }
 
   animate() {
-    if (this.state === GAME_STATE.RUN) {
-      // this.ctx.clearRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
-      this.ctx.fillStyle = '#1e1a20'
-      this.ctx.fillRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
-      this.draw()
+    if (this.state !== GAME_STATE.RUN) {
+      return
     }
+
+    // this.ctx.clearRect(0, 0, innerWidth, innerHeight)
+    this.ctx.fillStyle = '#1e1a20'
+    this.ctx.fillRect(0, 0, this.DOM.canvas.width, this.DOM.canvas.height)
+    this.draw()
 
     this.animation = requestAnimationFrame(this.animate.bind(this))
   }

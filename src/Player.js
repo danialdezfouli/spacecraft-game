@@ -57,12 +57,8 @@ export default class Player {
     })
   }
 
-  run() {
-    this.fighter.animate()
-  }
-
-  pause() {
-    this.fighter.stop()
+  draw() {
+    this.fighter.draw()
   }
 
   addScore(dead) {

@@ -40,7 +40,7 @@ export default class Fighter {
   init({player, game}) {
     this.player = player
     this.game = game
-    this.animate()
+    this.draw()
   }
 
   createElement() {
@@ -60,11 +60,9 @@ export default class Fighter {
     this.DOM.el = el
   }
 
-  stop() {
-    cancelAnimationFrame(this.frameRequest)
-  }
+  stop() {}
 
-  animate() {
+  draw() {
     this.bullets.forEach(b => b.update())
     this.bullets.forEach(b => b.draw())
 
@@ -86,10 +84,6 @@ export default class Fighter {
       top: this.y.prev + 'px',
       left: this.x.prev - this.bounds.width / 2 + 'px',
     })
-
-    if (this.game.playing) {
-      this.frameRequest = requestAnimationFrame(this.animate.bind(this))
-    }
   }
 
   createFireDom() {
