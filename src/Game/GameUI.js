@@ -14,6 +14,7 @@ export class GameUI {
     this.createBottomLeftIndicators()
     this.createMenu()
     this.createGameOver()
+    this.createStars()
 
     this.addEvents()
   }
@@ -32,7 +33,7 @@ export class GameUI {
     for (let i = 0; i < 10; i++) {
       this.stars.push(
         new Star({
-          ctx: this.ui.ctx,
+          ctx: this.ctx,
         }),
       )
     }
