@@ -12,6 +12,8 @@ export class GameUI {
     this.stars = []
     this.createBottomRightIndicators()
     this.createBottomLeftIndicators()
+    this.createMenu()
+    this.createGameOver()
 
     this.addEvents()
   }
@@ -110,5 +112,81 @@ export class GameUI {
     })
 
     root.appendChild(el)
+  }
+
+  createMenu() {
+    const el = createDomNode('modal game-menu')
+    el.classList.add('hidden')
+    this.DOM.menu = el
+
+    const content = addDomNode(el, {className: 'content'})
+
+    addDomNode(content, {
+      className: 'title',
+      tag: 'h1',
+      text: 'Spacecraft Journey',
+    })
+
+    addDomNode(content, {
+      className: 'subtitle',
+      tag: 'h2',
+      text: 'Press ENTER to start',
+    })
+
+    root.appendChild(el)
+  }
+
+  showMenu() {
+    this.DOM.menu.classList.remove('hidden')
+  }
+
+  createGameOver() {
+    const el = createDomNode('modal game-over')
+    el.classList.add('hidden')
+    this.DOM.gameOver = el
+
+    const content = addDomNode(el, {className: 'content'})
+
+    this.DOM.GAMEOVER_TITLE = addDomNode(content, {
+      className: 'title',
+      tag: 'h1',
+      text: 'Game Over',
+    })
+
+    addDomNode(content, {
+      className: 'subtitle',
+      tag: 'h2',
+      text: 'Press ENTER to start again',
+    })
+
+    this.DOM.GAMEOVER_SCORE = addDomNode(content, {
+      className: 'score',
+      tag: 'p',
+      text: 'Your score: 0',
+    })
+
+    this.DOM.GAMEOVER_BEST = addDomNode(content, {
+      className: 'score best',
+      tag: 'p',
+      text: 'Your Best: 0',
+    })
+
+    root.appendChild(el)
+  }
+
+  showGameOver({level, score, best, is_new_record}) {
+    this.DOM.GAMEOVER_TITLE.textContent = is_new_record
+      ? 'New Record!'
+      : 'Game Over'
+    this.DOM.GAMEOVER_SCORE.textContent = `Your score: ${score}`
+    this.DOM.GAMEOVER_BEST.textContent = `Your Best: ${best}`
+
+    this.DOM.gameOver.classList.toggle('success', is_new_record)
+    this.DOM.gameOver.classList.remove('hidden')
+  }
+
+  hideModals() {
+    this.DOM.menu.classList.add('hidden')
+    this.DOM.gameOver.classList.add('hidden')
   }
 }

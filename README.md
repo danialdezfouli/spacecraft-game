@@ -6,9 +6,9 @@ a spacecraft that has to survive a journey through space
 
 ## ⌨ Shortcuts
 
-- **r** (Reload)
-- **space** (fire)
-- **enter** (thunder)
+- **R** _reload_
+- **Space** _fire_
+- **Enter** _thunder_
 
 ## 🐛 Bugs
 
@@ -27,7 +27,5 @@ pull requests.
 ## 📃 Todos
 
 - shortcuts modal
-- pause menu
-- save best score
 - choose fighter
 - add fuel

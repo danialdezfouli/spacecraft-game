@@ -19,6 +19,7 @@ export default class Player {
   }
 
   reset() {
+    this.best = Number(localStorage.getItem(config.BEST_SCORE) || 0)
     this.lastShootedBullet = 0
     this.lastShootedThunder = Date.now() - 7000
 
@@ -63,6 +64,12 @@ export default class Player {
 
   addScore(dead) {
     this.score += dead ? 20 : 5
+
+    const best = Number(localStorage.getItem(config.BEST_SCORE) || 0)
+
+    if (this.score > best) {
+      localStorage.setItem(config.BEST_SCORE, this.score)
+    }
 
     if (this.score >= this.level * 100) {
       this.life += 15
