@@ -1,4 +1,5 @@
-import {Bullet, Thunder} from './Bullet'
+import {Bullet} from './Bullet'
+import {Thunder} from './Thunder'
 import mouse from './Mouse'
 import {
   addDomNode,

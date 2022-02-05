@@ -1,7 +1,8 @@
 const config = {
   BEST_SCORE: 'best-score',
   reloadTime: 700,
-  thunder_time_gap: 10000,
+  thunderTimeGap: 10000,
+  firstAvailableThunderAt: 2000,
   bulletCpacity: 8,
 }
 

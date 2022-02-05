@@ -2,14 +2,14 @@ import config from '../config'
 import {GameEnemyService} from './GameEnemyService'
 import {GameUI} from './GameUI'
 
+const STARTING = 'starting'
 const PLAYING = 'running'
 const PAUSED = 'paused'
 const GAME_OVER = 'game_over'
 
 export default class Game {
   constructor({player}) {
-    this.initialized = false
-    this.state = PAUSED
+    this.state = STARTING
     this.ui = new GameUI(this)
     this.enemy = new GameEnemyService({
       game: this,
@@ -20,7 +20,6 @@ export default class Game {
     this.addEvents()
     this.animate()
     this.ui.showMenu()
-    // this.play()
   }
 
   get playing() {
@@ -33,6 +32,10 @@ export default class Game {
 
   get over() {
     return this.state === GAME_OVER
+  }
+
+  get starting() {
+    return this.state === STARTING
   }
 
   initPlayer(player) {
@@ -57,8 +60,8 @@ export default class Game {
     })
 
     window.addEventListener('click', e => {
-      if (this.paused) {
-        this.play()
+      if (!this.playing) {
+        this.start()
       }
     })
 
@@ -67,16 +70,24 @@ export default class Game {
         if (this.playing) {
           this.pause()
         } else {
-          this.play()
+          this.start()
         }
       }
 
       if (e.key.toLowerCase() === 'enter') {
         if (!this.playing) {
-          this.play()
+          this.start()
         }
       }
     })
+  }
+
+  start() {
+    if (this.over || this.starting) {
+      this.player.start()
+    }
+
+    this.play()
   }
 
   play() {
@@ -107,9 +118,6 @@ export default class Game {
     })
 
     this.player.fighter.bullets.forEach(bullet => bullet.destroy())
-
-    this.player.reset()
-    this.player.updateDom()
   }
 
   draw() {

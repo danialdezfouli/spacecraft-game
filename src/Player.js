@@ -9,6 +9,15 @@ export default class Player {
     this.addEvents()
   }
 
+  start() {
+    this.reset()
+    this.updateDom()
+
+    setTimeout(() => {
+      this.updateDom()
+    }, config.firstAvailableThunderAt + 50)
+  }
+
   init({game}) {
     this.game = game
     this.fighter.init({
@@ -21,7 +30,8 @@ export default class Player {
   reset() {
     this.best = Number(localStorage.getItem(config.BEST_SCORE) || 0)
     this.lastShootedBullet = 0
-    this.lastShootedThunder = Date.now() - 7000
+    this.lastShootedThunder =
+      Date.now() - config.thunderTimeGap + config.firstAvailableThunderAt
 
     this.bulletCapacity = config.bulletCpacity
     this.bulletsLeft = this.bulletCapacity
@@ -164,7 +174,7 @@ export default class Player {
     if (!this.game.playing) return false
     if (this.fighter.thunder) return false
 
-    if (Date.now() - this.lastShootedThunder < config.thunder_time_gap) {
+    if (Date.now() - this.lastShootedThunder < config.thunderTimeGap) {
       return false
     }
 
