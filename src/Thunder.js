@@ -24,22 +24,12 @@ export class Thunder {
     this.draw()
     this.onDestroy = onDestroy
 
-    let timer = setInterval(() => {
+    this.findEnemiesTimer = setInterval(() => {
       this.findEnemies()
     }, 50)
 
     setTimeout(() => {
-      this.active = false
-      this.DOM.el.classList.add('leaving')
-      setTimeout(() => {
-        clearInterval(timer)
-        this.DOM.el.classList.remove('leaving')
-        this.DOM.el.classList.add('leaved')
-        setTimeout(() => {
-          this.onDestroy(this)
-          this.DOM.el.remove()
-        }, 400)
-      }, 600)
+      this.fadeOut()
     }, this.ttl)
   }
 
@@ -66,5 +56,20 @@ export class Thunder {
     }
 
     this.DOM.el.style.cssText = `top: ${this.top}px; height: ${this.height}px; left: ${this.fighter.x.prev}px;`
+  }
+
+  fadeOut() {
+    if (!this.active) return
+    this.active = false
+    this.DOM.el.classList.add('leaving')
+    setTimeout(() => {
+      clearInterval(this.findEnemiesTimer)
+      this.DOM.el.classList.remove('leaving')
+      this.DOM.el.classList.add('leaved')
+      setTimeout(() => {
+        this.onDestroy(this)
+        this.DOM.el.remove()
+      }, 400)
+    }, 600)
   }
 }

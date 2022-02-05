@@ -119,6 +119,9 @@ export default class Game {
     })
 
     this.player.fighter.bullets.forEach(bullet => bullet.destroy())
+    if (this.player.fighter.thunder) {
+      this.player.fighter.thunder.fadeOut()
+    }
   }
 
   draw() {
