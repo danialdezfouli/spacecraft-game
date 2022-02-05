@@ -78,6 +78,7 @@ export default class Game {
 
       if (e.key.toLowerCase() === 'enter') {
         if (!this.playing) {
+          e.preventDefault()
           this.start()
         }
       }
