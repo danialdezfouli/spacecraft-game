@@ -27,9 +27,6 @@ class ClassTemplate {
   addEvents() {}
   removeEvents() {}
 
-  // or just an init event
-  initEvents() {}
-
   animate() {}
   run() {
     this.addEvents()

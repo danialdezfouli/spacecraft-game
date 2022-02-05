@@ -58,7 +58,7 @@ export class Bullet {
   }
 
   findEnemies() {
-    const enemies = this.player.game.enemies
+    const enemies = this.player.game.enemy.enemies
     const len = enemies.length
     for (let i = 0; i < len; i++) {
       const enemy = enemies[i]

@@ -1,6 +1,6 @@
-import Player from './Player.js'
-import Game from './Game.js'
-import Fighter from './Fighter.js'
+import Player from './Player'
+import Game from './Game/Game'
+import Fighter from './Fighter'
 
 const root = document.getElementById('root')
 window.root = root

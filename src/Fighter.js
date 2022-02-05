@@ -1,5 +1,4 @@
 import {Bullet, Thunder} from './Bullet'
-import {GAME_STATE} from './Game'
 import mouse from './Mouse'
 import {
   addDomNode,

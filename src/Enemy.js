@@ -3,10 +3,9 @@ import {addDomNode, rand} from './utils'
 const emojies = ['👽', '👾', '🚀', '💣', '🔥', '💀', '🤖']
 
 export default class Enemy {
-  constructor({game, speed}) {
-    this.DOM = {}
-    this.DOM.el = addDomNode(root, {className: 'enemy'})
+  constructor({game, speed, enemyService}) {
     this.game = game
+    this.service = enemyService
     this.active = true
 
     this.life = 100
@@ -15,15 +14,16 @@ export default class Enemy {
     this.width = 30
     this.x = rand(0.25, 0.75) * innerWidth
     this.y = -50
-    this.DOM.el.style.left = `${this.x}px`
 
+    this.DOM = {}
+    this.DOM.el = addDomNode(root, {className: 'enemy'})
+    this.DOM.el.style.left = `${this.x}px`
     this.DOM.el.innerHTML = emojies[Math.floor(rand(0, emojies.length - 1))]
   }
 
   draw() {
     if (this.y > innerHeight) {
-      this.game.enemyCrossOvered(this)
-      this.game.removeEnemy(this)
+      this.service.crossOveredScreen(this)
       this.DOM.el.remove()
       return
     }
@@ -60,7 +60,7 @@ export default class Enemy {
   destroy() {
     this.active = false
     this.DOM.el.classList.add('destroy')
-    this.game.removeEnemy(this)
+    this.game.enemy.remove(this)
     this.dy = 0
 
     setTimeout(() => {
