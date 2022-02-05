@@ -46,11 +46,13 @@ export default class Game {
   }
 
   addEvents() {
-    let wasPlaying = false
     window.addEventListener('visibilitychange', () => {
+      let wasPlaying = false
       if (document.visibilityState === 'hidden') {
-        wasPlaying = this.playing
-        this.pause()
+        if (this.playing) {
+          wasPlaying = true
+          this.pause()
+        }
       } else if (wasPlaying) {
         const timeout_play_after_return = 300
         setTimeout(() => {
