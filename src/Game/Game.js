@@ -60,7 +60,7 @@ export default class Game {
     })
 
     window.addEventListener('click', e => {
-      if (!this.playing) {
+      if (this.paused || this.starting) {
         this.start()
       }
     })
@@ -83,16 +83,17 @@ export default class Game {
   }
 
   start() {
-    if (this.over || this.starting) {
-      this.player.start()
+    const starting = this.over || this.starting
+    if (starting) {
+      this.player.start(starting)
     }
 
-    this.play()
+    this.play(starting)
   }
 
-  play() {
+  play(starting) {
     this.state = PLAYING
-    this.enemy.start()
+    this.enemy.start(starting)
     this.animate()
     this.ui.hideModals()
   }

@@ -6,16 +6,16 @@ export default class Player {
   constructor({fighter}) {
     this.fighter = fighter
     this.reset()
-    this.addEvents()
   }
 
   start() {
     this.reset()
     this.updateDom()
+    this.addEvents()
 
     setTimeout(() => {
       this.updateDom()
-    }, config.firstAvailableThunderAt + 50)
+    }, 2050)
   }
 
   init({game}) {
@@ -44,6 +44,8 @@ export default class Player {
   }
 
   addEvents() {
+    if (this.eventsInit) return
+    this.eventsInit = true
     window.addEventListener('click', event => {
       if (this.game.over) return
 
@@ -64,6 +66,12 @@ export default class Player {
 
       if (event.key.toLowerCase() === 'r' && this.canReload()) {
         this.reload()
+      }
+    })
+
+    this.game.ui.DOM.thunder.addEventListener('click', () => {
+      if (this.canShootThunder()) {
+        this.shootThunder()
       }
     })
   }

@@ -34,7 +34,7 @@ export class GameEnemyService {
       const enemy = new Enemy({
         game: this.game,
         enemyService: this,
-        speed: Math.random() * 1.4 + 0.3 + this.player.level * 0.07,
+        speed: (0.3 + Math.random()) * 1.4 + this.player.level * 0.09,
       })
       this.enemies.push(enemy)
     }
