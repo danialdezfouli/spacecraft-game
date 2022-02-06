@@ -19,7 +19,13 @@ export default class Game {
     this.initPlayer(player)
     this.addEvents()
     this.animate()
-    this.ui.showMenu()
+    // this.ui.showMenu()
+    this.ui.showGameOver({
+      score: 1500,
+      level: 1,
+      is_new_record: false,
+      best: 100,
+    })
   }
 
   get playing() {
@@ -65,6 +71,10 @@ export default class Game {
       if (this.paused || this.starting) {
         this.start()
       }
+    })
+
+    this.ui.DOM.GAMEOVER_RESTART.addEventListener('click', e => {
+      this.start()
     })
 
     window.addEventListener('keydown', e => {

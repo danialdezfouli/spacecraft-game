@@ -172,11 +172,27 @@ export class GameUI {
       text: 'Your Best: 0',
     })
 
-    this.DOM.GAMEOVER_SHARE_TWITTER = addDomNode(content, {
-      className: 'share-twitter',
-      tag: 'a',
-      text: 'Tweet it now',
-    })
+    this.DOM.GAMEOVER_SHARE_TWITTER = addDomNode(
+      addDomNode(content, {
+        tag: 'div',
+      }),
+      {
+        className: 'share-twitter',
+        tag: 'a',
+        text: 'Tweet it now',
+      },
+    )
+
+    this.DOM.GAMEOVER_RESTART = addDomNode(
+      addDomNode(content, {
+        tag: 'div',
+      }),
+      {
+        className: 'restart',
+        tag: 'button',
+        text: 'Start Again',
+      },
+    )
 
     this.DOM.GAMEOVER_SHARE_TWITTER.target = '_blank'
 
