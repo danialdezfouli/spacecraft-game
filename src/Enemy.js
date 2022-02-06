@@ -1,6 +1,6 @@
 import {addDomNode, rand} from './utils'
 
-const emojies = ['👽', '👾', '🚀', '💣', '🔥', '💀', '🤖']
+const emojies = ['👽', '👾', '🚀', '💣', '🔥', '💀', '🤖', '🌌', '🎃', '🌠']
 
 export default class Enemy {
   constructor({game, speed, enemyService}) {
@@ -18,7 +18,7 @@ export default class Enemy {
     this.DOM = {}
     this.DOM.el = addDomNode(root, {className: 'enemy'})
     this.DOM.el.style.left = `${this.x}px`
-    this.DOM.el.innerHTML = emojies[Math.floor(rand(0, emojies.length - 1))]
+    this.DOM.el.innerHTML = emojies[Math.floor(rand(0, emojies.length))]
   }
 
   draw() {

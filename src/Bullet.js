@@ -35,7 +35,8 @@ export class Bullet {
       this.height = this.height + this.dh
     }
 
-    if (this.y > 0) {
+    // look for enemies every 3px
+    if (this.y > 0 && Math.round(this.y) % 5 === 0) {
       this.findEnemies()
     }
   }
@@ -62,9 +63,9 @@ export class Bullet {
       const enemy = enemies[i]
       if (
         this.y < enemy.y + enemy.height &&
+        this.x < enemy.x + enemy.width &&
         this.y + this.height > enemy.y &&
-        this.x + this.height > enemy.x &&
-        this.x < enemy.x + enemy.width
+        this.x + this.width > enemy.x
       ) {
         this.active = false
         this.destroy()
