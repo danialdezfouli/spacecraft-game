@@ -19,13 +19,13 @@ export default class Game {
     this.initPlayer(player)
     this.addEvents()
     this.animate()
-    // this.ui.showMenu()
-    this.ui.showGameOver({
-      score: 1500,
-      level: 1,
-      is_new_record: false,
-      best: 100,
-    })
+    this.ui.showMenu()
+    // this.ui.showGameOver({
+    //   score: 1500,
+    //   level: 1,
+    //   is_new_record: false,
+    //   best: 100,
+    // })
   }
 
   get playing() {
